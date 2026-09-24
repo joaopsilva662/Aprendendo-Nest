@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -57,22 +56,22 @@ model Product {
 }
 
 model Order {
-  id    Int     @id @default(autoincrement())
-  total Decimal @db.Decimal(10, 2)
-  status OrderStatus @default(PENDING)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  items OrderItem[]
+  id        Int         @id @default(autoincrement())
+  total     Decimal     @db.Decimal(10, 2)
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  userId    Int
+  user      User        @relation(fields: [userId], references: [id])
+  items     OrderItem[]
 }
 
 model OrderItem {
-  id Int @id @default(autoincrement())
-  quantity Int
-  price Decimal @db.Decimal(10, 2)
-  orderId Int
-  order Order @relation(fields: [orderId], references: [id])
+  id        Int     @id @default(autoincrement())
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2)
+  orderId   Int
+  order     Order   @relation(fields: [orderId], references: [id])
   productId Int
-  product Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }
