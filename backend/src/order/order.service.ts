@@ -9,7 +9,7 @@ import { UpdateOrderDto } from './dto/update-order.dto.js';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(createOrderDto: CreateOrderDto) {
     const { userId, items } = createOrderDto;
@@ -107,7 +107,9 @@ export class OrderService {
 
     return this.prisma.order.update({
       where: { id },
-      data: updateOrderDto,
+      data: {
+        status: updateOrderDto.status,
+      },
       include: {
         user: true,
         items: {
